@@ -34,3 +34,7 @@ Every module has a free tier. Practice improves your chances in an exam or inter
 This repository holds the static product page published at **https://hamzafareed12.github.io/talknative/**: plain HTML and CSS, no build step. The app itself lives at [talknative.io](https://www.talknative.io/).
 
 © 2026 TalkNative
+
+## Chrome extension
+
+[`chrome-extension/`](chrome-extension) is the source of **TalkNative – Speaking Practice** for Chrome: hear any selected text spoken in its own language, learn three words a day out loud, and time IELTS Speaking Part 2 answers with a 1 + 2 minute timer and playback. It collects no data ([privacy policy](https://hamzafareed12.github.io/talknative/extension-privacy.html)).

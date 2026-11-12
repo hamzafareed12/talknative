@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TalkNative</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body{width:380px;min-height:460px}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;background:#fff}
+header img{height:21px;width:auto}
+header a{font-size:12px;font-weight:600;text-decoration:none}
+.tabs{display:flex;gap:4px;padding:2px 12px 0;background:#fff;border-bottom:1px solid var(--line)}
+.tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;padding:8px 4px 9px;font-weight:600;color:var(--muted);font-size:13px}
+.tab[aria-selected="true"]{color:var(--blue);border-bottom-color:var(--blue)}
+main{padding:12px 14px 14px}
+.day{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.day h2{font-size:14.5px}
+.day small{color:var(--muted);font-size:12px}
+.word{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.word-top{display:flex;align-items:center;gap:8px}
+.word-top strong{font-size:16px}
+.pos{font-size:11.5px;color:var(--muted);font-style:italic}
+.word-top .icon-btn{margin-left:auto;width:28px;height:28px}
+.meaning{margin:3px 0 7px;color:var(--ink-2);font-size:13px;line-height:1.4}
+.example{display:flex;gap:8px;align-items:center;background:var(--bg);border-radius:10px;padding:6px 10px 6px 6px;font-size:12.5px;line-height:1.4;color:var(--ink-2)}
+#p-words .link-cta{margin-top:10px}
+.example .icon-btn{width:26px;height:26px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 6px}
+textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font:inherit;color:var(--ink);background:#fff}
+textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,124,255,.15)}
+.row{display:flex;gap:10px;margin-top:12px}
+.row > div{flex:1}
+select{width:100%;border:1px solid var(--line);border-radius:10px;padding:7px 8px;font:inherit;background:#fff;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.actions{display:flex;gap:8px;margin-top:12px}
+.actions .btn{flex:1}
+.hint{font-size:12px;color:var(--muted);margin:10px 0 0}
+.detected{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.card .kicker{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.card h3{font-size:16px;margin:6px 0 8px}
+.card ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:13px}
+.card li{margin:2px 0}
+.card .small{font-size:12px;color:var(--muted);margin:10px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <img src="icons/logo.png" alt="TalkNative">
+  <a id="site" href="https://www.talknative.io/" target="_blank">talknative.io ↗</a>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-words" aria-controls="p-words" aria-selected="true">Today’s words</button>
+  <button class="tab" role="tab" id="t-hear" aria-controls="p-hear" aria-selected="false">Hear it</button>
+  <button class="tab" role="tab" id="t-ielts" aria-controls="p-ielts" aria-selected="false">IELTS Part 2</button>
+</div>
+
+<main>
+  <section class="panel" id="p-words" role="tabpanel" aria-labelledby="t-words">
+    <div class="day"><h2>Three words to say out loud</h2><small id="day-label"></small></div>
+    <div id="words"></div>
+    <a class="link-cta" data-utm="word-mode" href="https://www.talknative.io/word-mode" target="_blank">Use them in your own sentences with an AI Partner <span>→</span></a>
+  </section>
+
+  <section class="panel" id="p-hear" role="tabpanel" aria-labelledby="t-hear" hidden>
+    <label for="text">Type or paste a word, phrase or sentence</label>
+    <textarea id="text" placeholder="I have been living here for two years."></textarea>
+    <div class="row">
+      <div><label for="lang">Language</label><select id="lang"><option value="auto">Detect automatically</option></select></div>
+      <div><label for="rate">Speed <span id="rate-val"></span></label><input id="rate" type="range" min="0.5" max="1.3" step="0.1" value="1"></div>
+    </div>
+    <div class="detected" id="detected" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn btn-primary" id="play">▶ Hear it</button>
+      <button class="btn btn-ghost" id="stop">Stop</button>
+    </div>
+    <p class="hint">Tip: select text on any page, right-click and choose <b>Hear “…” spoken</b>.</p>
+    <a class="link-cta" data-utm="hear-it" href="https://www.talknative.io/" target="_blank">Practise saying it in a real conversation <span>→</span></a>
+  </section>
+
+  <section class="panel" id="p-ielts" role="tabpanel" aria-labelledby="t-ielts" hidden>
+    <div class="card">
+      <span class="kicker">Today’s cue card</span>
+      <h3 id="cue-prompt"></h3>
+      <p class="small" style="margin:0 0 6px">You should say:</p>
+      <ul id="cue-bullets"></ul>
+      <p class="small">1 minute to prepare, then speak for up to 2 minutes, as in the real test. Your answer is recorded so you can listen back.</p>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="start-cue">Start timed practice</button>
+      <button class="btn btn-ghost" id="new-cue">Another card</button>
+    </div>
+    <a class="link-cta" data-utm="ielts-part2" href="https://www.talknative.io/ielts/speaking" target="_blank">Get a band score: full IELTS Speaking mock test <span>→</span></a>
+  </section>
+</main>
+
+<script src="data/words.js"></script>
+<script src="data/cue-cards.js"></script>
+<script src="common.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

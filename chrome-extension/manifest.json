@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "TalkNative – Speaking Practice",
+  "short_name": "TalkNative",
+  "version": "1.0.0",
+  "description": "Hear any selected text spoken aloud, learn three words a day out loud, and time your IELTS Speaking Part 2 answers.",
+  "homepage_url": "https://www.talknative.io/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "TalkNative speaking practice",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": { "service_worker": "background.js" },
+  "permissions": ["contextMenus", "tts", "storage"]
+}

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Speaking Part 2 practice – TalkNative</title>
+<link rel="icon" href="icons/icon32.png">
+<link rel="stylesheet" href="styles.css">
+<style>
+body{min-height:100vh;background:
+  radial-gradient(40% 40% at 10% 0%,rgba(20,124,255,.16),transparent 70%),
+  radial-gradient(35% 40% at 95% 10%,rgba(124,92,255,.12),transparent 70%),var(--bg)}
+.top{display:flex;align-items:center;justify-content:space-between;max-width:980px;margin:0 auto;padding:22px 20px}
+.top img{height:28px;width:auto}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px 48px;display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 1px 2px rgba(11,27,51,.05),0 16px 40px -20px rgba(11,27,51,.25);padding:28px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:28px;margin:8px 0 14px}
+.say{color:var(--muted);margin:0 0 6px;font-size:14px}
+.bullets{margin:0 0 20px;padding-left:20px;font-size:16px;color:var(--ink-2)}
+.bullets li{margin:4px 0}
+.stage{display:flex;align-items:center;gap:20px;padding:18px;border-radius:18px;background:var(--bg);margin-bottom:16px}
+.ring{--p:0;position:relative;width:96px;height:96px;flex:none;border-radius:50%;background:conic-gradient(var(--c,var(--blue)) calc(var(--p)*1turn),#dfe7f2 0)}
+.ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#fff}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;z-index:1;font:700 22px/1 "Segoe UI",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.stage h2{font-size:18px;margin-bottom:4px}
+.stage p{margin:0;color:var(--ink-2);font-size:14px}
+.rec{display:none;align-items:center;gap:6px;color:var(--red);font-weight:600;font-size:13px;margin-top:6px}
+.rec:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s infinite}
+.rec.on{display:inline-flex}
+@keyframes blink{50%{opacity:.25}}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;resize:vertical}
+textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,124,255,.15)}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.controls .btn{padding:11px 20px}
+audio{width:100%;margin-top:14px}
+.after[hidden],.notes[hidden]{display:none}
+.after h3{font-size:16px;margin:22px 0 8px}
+.after ol{margin:0;padding-left:20px;color:var(--ink-2)}
+.after li{margin:4px 0}
+.check{list-style:none;padding:0;margin:0}
+.check li{margin:8px 0}
+.check label{display:flex;gap:10px;align-items:flex-start;font-weight:500;color:var(--ink-2);font-size:14px;margin:0;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--green);width:16px;height:16px}
+aside .panel{padding:22px}
+aside h2{font-size:16px;margin-bottom:10px}
+aside ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px}
+aside li{margin:6px 0}
+.note{font-size:12.5px;color:var(--muted);margin:14px 0 0}
+.mic-msg{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--amber-50);color:var(--amber);font-size:13px}
+.mic-msg[hidden]{display:none}
+@media (max-width:820px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <img src="icons/logo.png" alt="TalkNative">
+  <a class="btn btn-ghost" href="https://www.talknative.io/ielts/speaking" data-utm="practice-header" target="_blank">IELTS Speaking mock test ↗</a>
+</div>
+
+<div class="wrap">
+  <main class="panel">
+    <span class="kicker">IELTS Speaking · Part 2 · <span id="topic"></span></span>
+    <h1 id="prompt"></h1>
+    <p class="say">You should say:</p>
+    <ul class="bullets" id="bullets"></ul>
+
+    <div class="stage">
+      <div class="ring" id="ring"><span id="clock">1:00</span></div>
+      <div>
+        <h2 id="stage-title">Ready when you are</h2>
+        <p id="stage-text">You get one minute to prepare and make notes, then up to two minutes to speak, just like the real test.</p>
+        <span class="rec" id="rec">Recording</span>
+      </div>
+    </div>
+
+    <div class="notes" id="notes-box">
+      <label for="notes">Your notes (only on this screen, never saved)</label>
+      <textarea id="notes" placeholder="Key words for each point…"></textarea>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" id="go">Start the 1-minute preparation</button>
+      <button class="btn btn-ghost" id="skip" hidden>Start speaking now</button>
+      <button class="btn btn-ghost" id="finish" hidden>I’ve finished</button>
+      <button class="btn btn-ghost" id="next">Another cue card</button>
+    </div>
+    <p class="mic-msg" id="mic-msg" hidden></p>
+
+    <section class="after" id="after" hidden>
+      <h3>Listen to your answer</h3>
+      <audio id="playback" controls></audio>
+      <h3>Check yourself</h3>
+      <ul class="check">
+        <li><label><input type="checkbox"> I covered all four points on the card</label></li>
+        <li><label><input type="checkbox"> I kept going for most of the two minutes</label></li>
+        <li><label><input type="checkbox"> I gave reasons and examples, not just facts</label></li>
+        <li><label><input type="checkbox"> I used linking words: “because”, “although”, “what I mean is”</label></li>
+        <li><label><input type="checkbox"> I corrected myself without stopping for long</label></li>
+      </ul>
+      <h3>The examiner may then ask (Part 3)</h3>
+      <ol id="part3"></ol>
+      <a class="link-cta" href="https://www.talknative.io/ielts/speaking" data-utm="practice-result" target="_blank">Want a band score? Take the full IELTS Speaking mock test with an AI examiner <span>→</span></a>
+    </section>
+  </main>
+
+  <aside>
+    <div class="panel">
+      <h2>How Part 2 works</h2>
+      <ul>
+        <li>The examiner gives you a card and one minute to prepare.</li>
+        <li>You may make notes, then speak for one to two minutes.</li>
+        <li>The examiner stops you at two minutes, so do not rush the ending.</li>
+        <li>Part 3 then asks broader questions on the same theme.</li>
+      </ul>
+      <p class="note">Your recording stays in this tab. Nothing is uploaded, and it is gone when you close the tab.</p>
+    </div>
+  </aside>
+</div>
+
+<script src="data/cue-cards.js"></script>
+<script src="common.js"></script>
+<script src="practice.js"></script>
+</body>
+</html>
